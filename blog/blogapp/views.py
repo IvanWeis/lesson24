@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from blogapp.models import Category, Tovar  # может подкрашиваться
+from blogapp.models import Category, Product  # может подкрашиваться
 from django.views.generic import ListView, DetailView
 
 # Create your views here.
@@ -8,7 +8,7 @@ def main_view(request):
 
 def category(request): # на blogapp/category.html передаем объединенный context (Category и Tovar)
     categories = Category.objects.all() # выбираем все Категории и отправляем на страницу
-    tovars = Tovar.objects.all() # выбираем все Тщвары и отправляем на страницу
+    tovars = Product.objects.all() # выбираем все Тщвары и отправляем на страницу
     return render(request, 'blogapp/category.html', context={'categories' : categories, 'tovars' : tovars})
 
 def contact(request):
@@ -17,7 +17,7 @@ def contact(request):
 # CRUD
 # Получить список Товаров с помощью ListView:
 class TovarListView(ListView): # класс TovarListView наследуется от класса ListView
-    model = Tovar  # на основе модели Tovar
+    model = Product  # на основе модели Tovar
     template_name = 'blogapp/tovar_list.html' # результаты будем передавать на страницу category_tovar.html
 
     def get_context_data(self, *args, **kwargs): # отвечает за передачу параметров в context={}
@@ -44,7 +44,7 @@ class CategoryListView(ListView): # класс CategoryListView наследуе
 
 # Детальная информация (информация об одном Товаре):
 class TovarDetailView(DetailView):
-    model = Tovar
+    model = Product
     template_name = 'blogapp/tovar_detail.html'
 
 # Метод get_context_data  1:33
