@@ -1,6 +1,16 @@
 from django.contrib import admin
-from .models import Category, Tovar # я добавил
+from .models import Category, Product # я добавил
 
 # Register your models here.
-admin.site.register(Category)    # я добавил
-admin.site.register(Tovar)       # я добавил
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['name', 'slug']
+    prepopulated_fields = {'slug': ('name',)}  # чтобы автоматически формировался slug
+admin.site.register(Category, CategoryAdmin)
+
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ['name', 'slug', 'price', 'available', 'created', 'updated']
+    list_filter = ['available', 'created', 'updated']
+    list_editable = ['price', 'available']
+    prepopulated_fields = {'slug': ('name',)}
+admin.site.register(Product, ProductAdmin)
+
